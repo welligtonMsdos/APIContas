@@ -2,7 +2,7 @@
 
 public interface ICommand<T>
 {
-    Task Incluir(T entity);
-    Task Alterar(T entity);
-    Task Excluir(T entity);
+    Task<bool> Incluir(T entity);
+    Task<bool> Alterar(T entity);
+    Task<bool> Excluir(T entity);
 }

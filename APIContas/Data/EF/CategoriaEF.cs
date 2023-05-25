@@ -11,9 +11,13 @@ public class CategoriaEF : ICategoriaRepository
 
     public CategoriaEF(ContasContext context) => (_context) = (context);
     
-    public async Task Alterar(Categoria entity)
+    public async Task<bool> Alterar(Categoria entity)
     {
+        _context.Update(entity);
+
         await _context.SaveChangesAsync();
+
+        return entity.Id > 0 ? true : false;
     }
 
     public async Task<Categoria> BuscarPorId(int id)
@@ -39,15 +43,19 @@ public class CategoriaEF : ICategoriaRepository
                 .ToListAsync();
     }
 
-    public async Task Excluir(Categoria entity)
+    public async Task<bool> Excluir(Categoria entity)
     {
         _context.Remove(entity);
-        await _context.SaveChangesAsync();
+
+        return await _context.SaveChangesAsync() > 1 ? true : false;
     }
 
-    public async Task Incluir(Categoria entity)
+    public async Task<bool> Incluir(Categoria entity)
     {
         _context.Add(entity);
+
         await _context.SaveChangesAsync();
+
+        return entity.Id > 0 ? true : false;
     }
 }

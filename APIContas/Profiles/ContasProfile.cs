@@ -9,5 +9,7 @@ public class ContasProfile : Profile
     public ContasProfile()
     {
         CreateMap<ReadCategoriaDto, Categoria>().ReverseMap();
+        CreateMap<UpdateCategoriaDto, Categoria>().ReverseMap();
+        CreateMap<CreateCategoriaDto, Categoria>().ReverseMap();
     }
 }
