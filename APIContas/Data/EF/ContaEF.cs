@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIContas.Data.EF;
 
-public class CategoriaEF : ICategoriaRepository
+public class ContaEF: IContaRepository
 {
     private readonly ContasContext _context;
 
-    public CategoriaEF(ContasContext context) => (_context) = (context);
-    
-    public async Task<bool> Alterar(Categoria entity)
+    public ContaEF(ContasContext context) => (_context) = (context);
+
+    public async Task<bool> Alterar(Conta entity)
     {
         _context.Update(entity);
 
@@ -20,37 +20,37 @@ public class CategoriaEF : ICategoriaRepository
         return entity.Id > 0 ? true : false;
     }
 
-    public async Task<Categoria> BuscarPorId(int id)
+    public async Task<Conta> BuscarPorId(int id)
     {
-        return await _context.Categoria
-                .FirstAsync(x => x.Id == id);
+        return await _context.Conta
+            .FirstAsync(x => x.Id == id);
     }
 
-    public async Task<ICollection<Categoria>> BuscarPorValores(string values)
+    public async Task<ICollection<Conta>> BuscarPorValores(string values)
     {
         if (values == null) return await BuscarTodos();
 
-        return await _context.Categoria
+        return await _context.Conta
             .Where(x => x.Descricao.Contains(values) && x.Ativo)
             .ToListAsync();
     }
 
-    public async Task<ICollection<Categoria>> BuscarTodos()
+    public async Task<ICollection<Conta>> BuscarTodos()
     {
-        return await _context.Categoria
-                .Where(x => x.Ativo)
-                .OrderBy(x => x.Descricao)
-                .ToListAsync();
+        return await _context.Conta
+            .Where(x => x.Ativo)
+            .OrderBy(x => x.Descricao)
+            .ToListAsync();
     }
 
-    public async Task<bool> Excluir(Categoria entity)
+    public async Task<bool> Excluir(Conta entity)
     {
         _context.Remove(entity);
 
         return await _context.SaveChangesAsync() > 1 ? true : false;
     }
 
-    public async Task<bool> Incluir(Categoria entity)
+    public async Task<bool> Incluir(Conta entity)
     {
         _context.Add(entity);
 

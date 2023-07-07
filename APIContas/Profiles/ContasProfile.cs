@@ -11,5 +11,9 @@ public class ContasProfile : Profile
         CreateMap<ReadCategoriaDto, Categoria>().ReverseMap();
         CreateMap<UpdateCategoriaDto, Categoria>().ReverseMap();
         CreateMap<CreateCategoriaDto, Categoria>().ReverseMap();
+
+        CreateMap<ReadContaDto, Conta>().ReverseMap();
+        CreateMap<UpdateContaDto, Conta>().ReverseMap();
+        CreateMap<CreateContaDto, Conta>().ReverseMap();
     }
 }
