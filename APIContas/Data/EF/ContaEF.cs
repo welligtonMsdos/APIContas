@@ -43,6 +43,38 @@ public class ContaEF: IContaRepository
             .ToListAsync();
     }
 
+    public ICollection<Conta> BuscarTotalPorMes(int numeroMes)
+    {
+       return _context.Conta
+            .Where(x => x.Mes == numeroMes)
+            .GroupBy(x => x.Mes)
+            .Select(g => new Conta()
+            {       
+                Descricao = GetNomeMes(numeroMes),
+                Valor = g.Sum(x => x.Valor)
+            })
+            .ToList();
+    }
+    
+    private string GetNomeMes(int numeroMes)
+    {
+        return numeroMes switch{
+            1 => "Janeiro",
+            2 => "Fevereiro",
+            3 => "Março",
+            4 => "Abril",
+            5 => "Maio",
+            6 => "Junho",
+            7 => "Julho",
+            8 => "Agosto",
+            9 => "Setembro",
+            10 => "Outubro",
+            11 => "Novembro",
+            12 => "Dezembro",
+            _ => ""
+        };
+    }
+
     public async Task<bool> Excluir(Conta entity)
     {
         _context.Remove(entity);

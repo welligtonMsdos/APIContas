@@ -42,6 +42,19 @@ public class ContaController : BaseController
         }
     }
 
+    [HttpGet("[Action]/{numeroMes}")]
+    public IActionResult BuscarTotalPorMes(int numeroMes)
+    {
+        try
+        {
+            return Ok(_mapper.Map<ICollection<ContaBuscarTotalPorMesDto>>(_service.BuscarTotalPorMes(numeroMes)));
+        }
+        catch (Exception ex)
+        {
+            return Response(ex.Message);
+        }
+    }
+
     [HttpPost]
     public async Task<ActionResult<CreateContaDto>> Inserir([FromBody] CreateContaDto dto)
     {
