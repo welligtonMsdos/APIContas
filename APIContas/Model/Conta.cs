@@ -19,6 +19,10 @@ public class Conta
     public decimal Valor { get; set; }
 
     [Required(ErrorMessage = "{0} é obrigatório")]
+    [Range(1,12, ErrorMessage = "{0} precsa estar entre 1 e 12")]
+    public int Mes { get; set; }
+
+    [Required(ErrorMessage = "{0} é obrigatório")]
     public DateTime DataInclusao { get; set; } = DateTime.Now;
 
     public bool Ativo { get; set; }

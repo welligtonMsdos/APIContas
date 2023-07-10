@@ -15,5 +15,10 @@ public class ContasProfile : Profile
         CreateMap<ReadContaDto, Conta>().ReverseMap();
         CreateMap<UpdateContaDto, Conta>().ReverseMap();
         CreateMap<CreateContaDto, Conta>().ReverseMap();
+
+        CreateMap<Conta, ContaBuscarTotalPorMesDto>()           
+            .ForMember(x => x.NomeMes, x => x.MapFrom(x => x.Descricao))
+            .ForMember(x => x.Valor, x => x.MapFrom(x => x.Valor))
+            .ReverseMap();
     }
 }

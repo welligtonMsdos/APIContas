@@ -34,6 +34,11 @@ public class ContaService : IContaService
         return await _repository.BuscarTodos();
     }
 
+    public ICollection<Conta> BuscarTotalPorMes(int numeroMes)
+    {
+        return _repository.BuscarTotalPorMes(numeroMes);
+    }
+
     public async Task<bool> Excluir(Conta entity)
     {
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
@@ -46,5 +51,5 @@ public class ContaService : IContaService
         entity.Ativo = true;
 
         return await _repository.Incluir(entity);
-    }
+    }   
 }
