@@ -31,14 +31,13 @@ public class ContaEF: IContaRepository
         if (values == null) return await BuscarTodos();
 
         return await _context.Conta
-            .Where(x => x.Descricao.Contains(values) && x.Ativo)
+            .Where(x => x.Descricao.Contains(values))
             .ToListAsync();
     }
 
     public async Task<ICollection<Conta>> BuscarTodos()
     {
-        return await _context.Conta
-            .Where(x => x.Ativo)
+        return await _context.Conta           
             .OrderBy(x => x.Descricao)
             .ToListAsync();
     }
@@ -85,6 +84,28 @@ public class ContaEF: IContaRepository
     public async Task<bool> Incluir(Conta entity)
     {
         _context.Add(entity);
+
+        await _context.SaveChangesAsync();
+
+        return entity.Id > 0 ? true : false;
+    }
+
+    public async Task<bool> Inativar(Conta entity)
+    {
+        entity.Ativo = false;
+
+        _context.Update(entity);
+
+        await _context.SaveChangesAsync();
+
+        return entity.Id > 0 ? true : false;
+    }
+
+    public async Task<bool> Ativar(Conta entity)
+    {
+        entity.Ativo = true;
+
+        _context.Update(entity);
 
         await _context.SaveChangesAsync();
 

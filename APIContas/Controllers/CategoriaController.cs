@@ -81,6 +81,40 @@ public class CategoriaController : BaseController
         }
     }
 
+    [HttpPut("[Action]/{id}")]
+    public async Task<ActionResult> Inativar(int id)
+    {
+        if (id == 0) return Response(EMensagem.ID_ZERADO);
+
+        try
+        {
+            await _service.Inativar(await _service.BuscarPorId(id));
+
+            return Response(EMensagem.INATIVADO_SUCESSO);
+        }
+        catch (Exception ex)
+        {
+            return Response(ex.Message);
+        }
+    }
+
+    [HttpPut("[Action]/{id}")]
+    public async Task<ActionResult> Ativar(int id)
+    {
+        if (id == 0) return Response(EMensagem.ID_ZERADO);
+
+        try
+        {
+            await _service.Ativar(await _service.BuscarPorId(id));
+
+            return Response(EMensagem.ATIVADO_SUCESSO);
+        }
+        catch (Exception ex)
+        {
+            return Response(ex.Message);
+        }
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult> Excluir(int id)
     {
@@ -90,7 +124,7 @@ public class CategoriaController : BaseController
         {
             await _service.Excluir(await _service.BuscarPorId(id));
 
-            return Ok(EMensagem.DELETADO_SUCESSO);
+            return Response(EMensagem.DELETADO_SUCESSO);
         }
         catch (Exception ex)
         {

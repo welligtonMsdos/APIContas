@@ -17,6 +17,13 @@ public class CategoriaService : ICategoriaService
         return await _repository.Alterar(entity);
     }
 
+    public async Task<bool> Ativar(Categoria entity)
+    {
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
+
+        return await _repository.Ativar(entity);
+    }
+
     public async Task<Categoria> BuscarPorId(int id)
     {
         if (id == 0) throw new Exception(EMensagem.ID_ZERADO);
@@ -39,6 +46,13 @@ public class CategoriaService : ICategoriaService
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Excluir(entity);
+    }
+
+    public async Task<bool> Inativar(Categoria entity)
+    {
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
+
+        return await _repository.Inativar(entity);
     }
 
     public async Task<bool> Incluir(Categoria entity)
