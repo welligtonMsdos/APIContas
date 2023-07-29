@@ -17,6 +17,13 @@ public class ContaService : IContaService
         return await _repository.Alterar(entity);
     }
 
+    public async Task<bool> Ativar(Conta entity)
+    {
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
+
+        return await _repository.Ativar(entity);
+    }
+
     public async Task<Conta> BuscarPorId(int id)
     {
         if (id == 0) throw new Exception(EMensagem.ID_ZERADO);
@@ -44,6 +51,13 @@ public class ContaService : IContaService
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Excluir(entity);
+    }
+
+    public async Task<bool> Inativar(Conta entity)
+    {
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
+
+        return await _repository.Inativar(entity);
     }
 
     public async Task<bool> Incluir(Conta entity)
