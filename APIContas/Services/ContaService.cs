@@ -14,6 +14,10 @@ public class ContaService : IContaService
     {
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
+        var entidade = await _repository.BuscarPorId(entity.Id);
+
+        if (!entidade.Ativo) throw new Exception(EMensagem.ELEMENTO_INATIVADO);
+
         return await _repository.Alterar(entity);
     }
 

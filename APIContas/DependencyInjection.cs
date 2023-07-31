@@ -14,6 +14,9 @@ public static class DependencyInjection
         services.AddScoped<IContaRepository, ContaEF>();
         services.AddScoped<IContaService, ContaService>();
 
+        services.AddScoped<IPerfilRepository, PerfilEF>();
+        services.AddScoped<IPerfilService, PerfilService>();
+
         return services;
     }
 }

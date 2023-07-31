@@ -13,6 +13,8 @@ public class ContaEF: IContaRepository
 
     public async Task<bool> Alterar(Conta entity)
     {
+        entity.Ativo = true;
+
         _context.Update(entity);
 
         await _context.SaveChangesAsync();
@@ -23,6 +25,7 @@ public class ContaEF: IContaRepository
     public async Task<Conta> BuscarPorId(int id)
     {
         return await _context.Conta
+            .IgnoreQueryFilters()
             .FirstAsync(x => x.Id == id);
     }
 

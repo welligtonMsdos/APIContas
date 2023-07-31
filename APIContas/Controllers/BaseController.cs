@@ -13,13 +13,14 @@ public abstract class BaseController : ControllerBase
                   result.ToString().Contains("Sequence") ||
                   result.ToString().Contains("cannot") ||
                   result.ToString().Contains("severed") ||
+                  result.ToString().Contains("inativado") ||
                   result.ToString().Contains("Id não"))
         {
             return Ok(new
             {
                 Success = false,
                 Message = "Error",
-                Data = result
+                Data = result.ToString().Replace("error","")
             });
         }
 

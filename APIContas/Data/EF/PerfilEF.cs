@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIContas.Data.EF;
 
-public class CategoriaEF : ICategoriaRepository
+public class PerfilEF : IPerfilRepository
 {
     private readonly ContasContext _context;
 
-    public CategoriaEF(ContasContext context) => (_context) = (context);
+    public PerfilEF(ContasContext context) => (_context) = (context);
 
-    public async Task<bool> Alterar(Categoria entity)
+    public async Task<bool> Alterar(Perfil entity)
     {
         entity.Ativo = true;
 
@@ -22,7 +22,7 @@ public class CategoriaEF : ICategoriaRepository
         return entity.Id > 0 ? true : false;
     }
 
-    public async Task<bool> Ativar(Categoria entity)
+    public async Task<bool> Ativar(Perfil entity)
     {
         entity.Ativo = true;
 
@@ -33,37 +33,37 @@ public class CategoriaEF : ICategoriaRepository
         return entity.Id > 0 ? true : false;
     }
 
-    public async Task<Categoria> BuscarPorId(int id)
+    public async Task<Perfil> BuscarPorId(int id)
     {
-        return await _context.Categoria
+        return await _context.Perfil
             .IgnoreQueryFilters()
             .FirstAsync(x => x.Id == id);
     }
 
-    public async Task<ICollection<Categoria>> BuscarPorValores(string values)
+    public async Task<ICollection<Perfil>> BuscarPorValores(string values)
     {
         if (values == null) return await BuscarTodos();
 
-        return await _context.Categoria
+        return await _context.Perfil
             .Where(x => x.Descricao.Contains(values))
             .ToListAsync();
     }
 
-    public async Task<ICollection<Categoria>> BuscarTodos()
+    public async Task<ICollection<Perfil>> BuscarTodos()
     {
-        return await _context.Categoria
-                .OrderBy(x => x.Descricao)
-                .ToListAsync();
+        return await _context.Perfil
+           .OrderBy(x => x.Descricao)
+           .ToListAsync();
     }
 
-    public async Task<bool> Excluir(Categoria entity)
+    public async Task<bool> Excluir(Perfil entity)
     {
         _context.Remove(entity);
 
         return await _context.SaveChangesAsync() > 1 ? true : false;
     }
 
-    public async Task<bool> Inativar(Categoria entity)
+    public async Task<bool> Inativar(Perfil entity)
     {
         entity.Ativo = false;
 
@@ -74,7 +74,7 @@ public class CategoriaEF : ICategoriaRepository
         return entity.Id > 0 ? true : false;
     }
 
-    public async Task<bool> Incluir(Categoria entity)
+    public async Task<bool> Incluir(Perfil entity)
     {
         _context.Add(entity);
 

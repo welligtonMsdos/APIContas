@@ -9,25 +9,24 @@ namespace APIContas.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CategoriaController : BaseController
+public class PerfilController : BaseController
 {
-    private readonly ICategoriaService _service;
+    private readonly IPerfilService _service;
     private readonly IMapper _mapper;
 
-    public CategoriaController(ICategoriaService service, IMapper mapper) => (_service,_mapper) = (service,mapper);
+    public PerfilController(IPerfilService service, IMapper mapper) => (_service, _mapper) = (service, mapper);
 
     [HttpGet]
     public async Task<IActionResult> BuscarTodos()
     {
         try
         {
-            return Ok(_mapper.Map<ICollection<ReadCategoriaDto>>(await _service.BuscarTodos()));
+            return Ok(_mapper.Map<ICollection<ReadPerfilDto>>(await _service.BuscarTodos()));
         }
         catch (Exception ex)
         {
             return Response(ex.Message);
         }
-       
     }
 
     [HttpGet("{id}")]
@@ -35,7 +34,7 @@ public class CategoriaController : BaseController
     {
         try
         {
-            return Ok(_mapper.Map<ReadCategoriaDto>(await _service.BuscarPorId(id)));
+            return Ok(_mapper.Map<ReadPerfilDto>(await _service.BuscarPorId(id)));
         }
         catch (Exception ex)
         {
@@ -44,17 +43,18 @@ public class CategoriaController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<CreateCategoriaDto>> Inserir([FromBody] CreateCategoriaDto dto)
+    public async Task<ActionResult<CreatePerfilDto>> Inserir([FromBody] CreatePerfilDto dto)
     {
         if (!ModelState.IsValid) return Response(EMensagem.MODELSTATE_FALSE);
 
         try
         {
-            var result = _mapper.Map<Categoria>(dto);           
+            var result = _mapper.Map<Perfil>(dto);
 
             await _service.Incluir(result);
 
             return Response(result);
+
         }
         catch (Exception ex)
         {
@@ -63,13 +63,13 @@ public class CategoriaController : BaseController
     }
 
     [HttpPut]
-    public async Task<ActionResult<UpdateCategoriaDto>> Alterar([FromBody]UpdateCategoriaDto dto)
+    public async Task<ActionResult<UpdatePerfilDto>> Alterar([FromBody] UpdatePerfilDto dto)
     {
         if (!ModelState.IsValid) return Response(EMensagem.MODELSTATE_FALSE);
 
         try
         {
-            var result = _mapper.Map<Categoria>(dto);
+            var result = _mapper.Map<Perfil>(dto);
 
             await _service.Alterar(result);
 

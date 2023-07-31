@@ -1,18 +1,16 @@
 ﻿using APIContas.Data.Interfaces;
-using APIContas.Data.ValidatorFluent;
 using APIContas.Enum;
 using APIContas.Model;
-using FluentValidation.Results;
 
 namespace APIContas.Services;
 
-public class CategoriaService : ICategoriaService
+public class UsuarioService : IUsuarioService
 {
-    private readonly ICategoriaRepository _repository;   
+    private readonly IUsuarioRepository _repository;
 
-    public CategoriaService(ICategoriaRepository repository) => (_repository) = (repository);
+    public UsuarioService(IUsuarioRepository repository) => (_repository) = (repository);
 
-    public async Task<bool> Alterar(Categoria entity)
+    public async Task<bool> Alterar(Usuario entity)
     {
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
@@ -23,54 +21,48 @@ public class CategoriaService : ICategoriaService
         return await _repository.Alterar(entity);
     }
 
-    public async Task<bool> Ativar(Categoria entity)
+    public async Task<bool> Ativar(Usuario entity)
     {
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Ativar(entity);
     }
 
-    public async Task<Categoria> BuscarPorId(int id)
+    public async Task<Usuario> BuscarPorId(int id)
     {
         if (id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.BuscarPorId(id);
     }
 
-    public async Task<ICollection<Categoria>> BuscarPorValores(string values)
+    public async Task<ICollection<Usuario>> BuscarPorValores(string values)
     {
         return await _repository.BuscarPorValores(values);
     }
 
-    public async Task<ICollection<Categoria>> BuscarTodos()
+    public async Task<ICollection<Usuario>> BuscarTodos()
     {
         return await _repository.BuscarTodos();
     }
 
-    public async Task<bool> Excluir(Categoria entity)
+    public async Task<bool> Excluir(Usuario entity)
     {
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Excluir(entity);
     }
 
-    public async Task<bool> Inativar(Categoria entity)
+    public async Task<bool> Inativar(Usuario entity)
     {
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Inativar(entity);
     }
 
-    public async Task<bool> Incluir(Categoria entity)
+    public async Task<bool> Incluir(Usuario entity)
     {
-        entity.Ativo = true;        
-
-        ValidationResult validResult = new CategoriaValidator().Validate(entity);
-
-        string[] erros = validResult.ToString("~").Split('~');        
-
-        if (!validResult.IsValid) throw new Exception("error" + erros[0]); 
+        entity.Ativo = true;
 
         return await _repository.Incluir(entity);
-    }  
+    }
 }
