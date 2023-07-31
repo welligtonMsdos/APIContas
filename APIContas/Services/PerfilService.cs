@@ -1,6 +1,8 @@
 ﻿using APIContas.Data.Interfaces;
+using APIContas.Data.ValidatorFluent;
 using APIContas.Enum;
 using APIContas.Model;
+using FluentValidation.Results;
 
 namespace APIContas.Services;
 
@@ -12,11 +14,13 @@ public class PerfilService : IPerfilService
 
     public async Task<bool> Alterar(Perfil entity)
     {
-        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);            
 
-        var entidade = await _repository.BuscarPorId(entity.Id);
+        ValidationResult validResult = new PerfilValidator().Validate(entity);
 
-        if (!entidade.Ativo) throw new Exception(EMensagem.ELEMENTO_INATIVADO);
+        string[] erros = validResult.ToString("~").Split('~');
+
+        if (!validResult.IsValid) throw new Exception("error" + erros[0]);
 
         return await _repository.Alterar(entity);
     }
@@ -61,7 +65,11 @@ public class PerfilService : IPerfilService
 
     public async Task<bool> Incluir(Perfil entity)
     {
-        entity.Ativo = true;
+        ValidationResult validResult = new PerfilValidator().Validate(entity);
+
+        string[] erros = validResult.ToString("~").Split('~');
+
+        if (!validResult.IsValid) throw new Exception("error" + erros[0]);
 
         return await _repository.Incluir(entity);
     }

@@ -86,6 +86,8 @@ public class ContaEF: IContaRepository
 
     public async Task<bool> Incluir(Conta entity)
     {
+        entity.Ativo = true;
+
         _context.Add(entity);
 
         await _context.SaveChangesAsync();

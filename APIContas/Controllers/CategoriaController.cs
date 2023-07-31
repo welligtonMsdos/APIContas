@@ -1,4 +1,4 @@
-﻿using APIContas.Data.Dtos;
+﻿using APIContas.Data.Dtos.Categoria;
 using APIContas.Data.Interfaces;
 using APIContas.Enum;
 using APIContas.Model;
@@ -16,6 +16,11 @@ public class CategoriaController : BaseController
 
     public CategoriaController(ICategoriaService service, IMapper mapper) => (_service,_mapper) = (service,mapper);
 
+
+    /// <summary>
+    /// Retorna todas as categorias ativas
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> BuscarTodos()
     {
@@ -30,6 +35,11 @@ public class CategoriaController : BaseController
        
     }
 
+    /// <summary>
+    /// Busca categoria pelo id
+    /// </summary>
+    /// <param name="id">id da conta</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<IActionResult> BuscarPorId(int id)
     {
@@ -43,6 +53,11 @@ public class CategoriaController : BaseController
         }
     }
 
+    /// <summary>
+    /// Adiciona uma categoria
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<ActionResult<CreateCategoriaDto>> Inserir([FromBody] CreateCategoriaDto dto)
     {
@@ -62,6 +77,11 @@ public class CategoriaController : BaseController
         }
     }
 
+    /// <summary>
+    /// Altera uma categoria
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários</param>
+    /// <returns></returns>
     [HttpPut]
     public async Task<ActionResult<UpdateCategoriaDto>> Alterar([FromBody]UpdateCategoriaDto dto)
     {
@@ -81,6 +101,11 @@ public class CategoriaController : BaseController
         }
     }
 
+    /// <summary>
+    /// Inativa uma categoria
+    /// </summary>
+    /// <param name="id">id da categoria para inativar</param>
+    /// <returns></returns>
     [HttpPut("[Action]/{id}")]
     public async Task<ActionResult> Inativar(int id)
     {
@@ -98,6 +123,11 @@ public class CategoriaController : BaseController
         }
     }
 
+    /// <summary>
+    /// Ativa uma categoria
+    /// </summary>
+    /// <param name="id">id da categoria para ativar</param>
+    /// <returns></returns>
     [HttpPut("[Action]/{id}")]
     public async Task<ActionResult> Ativar(int id)
     {
@@ -115,6 +145,11 @@ public class CategoriaController : BaseController
         }
     }
 
+    /// <summary>
+    /// Exclui uma categoria permanentemente
+    /// </summary>
+    /// <param name="id">id da categoria a ser excluída</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult> Excluir(int id)
     {

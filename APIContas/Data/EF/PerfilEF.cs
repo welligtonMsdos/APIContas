@@ -76,6 +76,8 @@ public class PerfilEF : IPerfilRepository
 
     public async Task<bool> Incluir(Perfil entity)
     {
+        entity.Ativo = true;
+
         _context.Add(entity);
 
         await _context.SaveChangesAsync();

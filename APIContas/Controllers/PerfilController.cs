@@ -1,4 +1,4 @@
-﻿using APIContas.Data.Dtos;
+﻿using APIContas.Data.Dtos.Perfil;
 using APIContas.Data.Interfaces;
 using APIContas.Enum;
 using APIContas.Model;
@@ -16,6 +16,10 @@ public class PerfilController : BaseController
 
     public PerfilController(IPerfilService service, IMapper mapper) => (_service, _mapper) = (service, mapper);
 
+    /// <summary>
+    /// Retorna todos os perfis ativos 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> BuscarTodos()
     {
@@ -29,6 +33,11 @@ public class PerfilController : BaseController
         }
     }
 
+    /// <summary>
+    /// Busca perfil pelo id
+    /// </summary>
+    /// <param name="id">id do perfil</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     public async Task<IActionResult> BuscarPorId(int id)
     {
@@ -42,6 +51,11 @@ public class PerfilController : BaseController
         }
     }
 
+    /// <summary>
+    /// Adiciona um perfil
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários</param>
+    /// <returns></returns>   
     [HttpPost]
     public async Task<ActionResult<CreatePerfilDto>> Inserir([FromBody] CreatePerfilDto dto)
     {
@@ -62,6 +76,11 @@ public class PerfilController : BaseController
         }
     }
 
+    /// <summary>
+    /// Altera um perfil
+    /// </summary>
+    /// <param name="dto">Objeto com os campos necessários</param>
+    /// <returns></returns>
     [HttpPut]
     public async Task<ActionResult<UpdatePerfilDto>> Alterar([FromBody] UpdatePerfilDto dto)
     {
@@ -81,6 +100,11 @@ public class PerfilController : BaseController
         }
     }
 
+    /// <summary>
+    /// Inativa um perfil 
+    /// </summary>
+    /// <param name="id">id do perfil para inativar</param>
+    /// <returns></returns>
     [HttpPut("[Action]/{id}")]
     public async Task<ActionResult> Inativar(int id)
     {
@@ -98,6 +122,11 @@ public class PerfilController : BaseController
         }
     }
 
+    /// <summary>
+    /// Ativa um perfil
+    /// </summary>
+    /// <param name="id">id do perfil para ativar</param>
+    /// <returns></returns>
     [HttpPut("[Action]/{id}")]
     public async Task<ActionResult> Ativar(int id)
     {
@@ -115,6 +144,11 @@ public class PerfilController : BaseController
         }
     }
 
+    /// <summary>
+    /// Exclui um perfil permanentemente
+    /// </summary>
+    /// <param name="id">id do perfil a ser excluído</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult> Excluir(int id)
     {

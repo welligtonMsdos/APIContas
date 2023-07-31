@@ -14,11 +14,13 @@ public class CategoriaService : ICategoriaService
 
     public async Task<bool> Alterar(Categoria entity)
     {
-        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);        
 
-        var entidade = await _repository.BuscarPorId(entity.Id);
+        ValidationResult validResult = new CategoriaValidator().Validate(entity);
 
-        if (!entidade.Ativo) throw new Exception(EMensagem.ELEMENTO_INATIVADO);
+        string[] erros = validResult.ToString("~").Split('~');
+
+        if (!validResult.IsValid) throw new Exception("error" + erros[0]);
 
         return await _repository.Alterar(entity);
     }
@@ -62,9 +64,7 @@ public class CategoriaService : ICategoriaService
     }
 
     public async Task<bool> Incluir(Categoria entity)
-    {
-        entity.Ativo = true;        
-
+    {       
         ValidationResult validResult = new CategoriaValidator().Validate(entity);
 
         string[] erros = validResult.ToString("~").Split('~');        

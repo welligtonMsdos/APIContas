@@ -12,11 +12,7 @@ public class UsuarioService : IUsuarioService
 
     public async Task<bool> Alterar(Usuario entity)
     {
-        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
-
-        var entidade = await _repository.BuscarPorId(entity.Id);
-
-        if (!entidade.Ativo) throw new Exception(EMensagem.ELEMENTO_INATIVADO);
+        if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);        
 
         return await _repository.Alterar(entity);
     }

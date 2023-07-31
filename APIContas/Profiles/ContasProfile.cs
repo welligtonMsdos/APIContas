@@ -1,4 +1,6 @@
-﻿using APIContas.Data.Dtos;
+﻿using APIContas.Data.Dtos.Categoria;
+using APIContas.Data.Dtos.Conta;
+using APIContas.Data.Dtos.Perfil;
 using APIContas.Model;
 using AutoMapper;
 
@@ -20,8 +22,8 @@ public class ContasProfile : Profile
         CreateMap<UpdatePerfilDto, Perfil>().ReverseMap();
         CreateMap<CreatePerfilDto, Perfil>().ReverseMap();
 
-        CreateMap<Conta, ContaBuscarTotalPorMesDto>()           
-            .ForMember(x => x.NomeMes, x => x.MapFrom(x => x.Descricao))
+        CreateMap<Conta, ReadContaBuscarTotalPorMesDto>()           
+            .ForMember(x => x.Descricao, x => x.MapFrom(x => x.Descricao))
             .ForMember(x => x.Valor, x => x.MapFrom(x => x.Valor))
             .ReverseMap();
     }

@@ -1,4 +1,4 @@
-﻿namespace APIContas.Data.Dtos;
+﻿namespace APIContas.Data.Dtos.Categoria;
 
 public record CreateCategoriaDto(string Descricao);
 

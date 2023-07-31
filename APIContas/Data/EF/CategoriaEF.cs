@@ -76,6 +76,8 @@ public class CategoriaEF : ICategoriaRepository
 
     public async Task<bool> Incluir(Categoria entity)
     {
+        entity.Ativo = true;
+
         _context.Add(entity);
 
         await _context.SaveChangesAsync();
