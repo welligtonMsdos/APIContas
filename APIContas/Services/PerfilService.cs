@@ -27,6 +27,8 @@ public class PerfilService : IPerfilService
 
     public async Task<bool> Ativar(Perfil entity)
     {
+        if (entity == null) throw new Exception(EMensagem.IS_NULL);
+
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Ativar(entity);
@@ -51,6 +53,8 @@ public class PerfilService : IPerfilService
 
     public async Task<bool> Excluir(Perfil entity)
     {
+        if (entity == null) throw new Exception(EMensagem.IS_NULL);
+
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Excluir(entity);
@@ -58,6 +62,8 @@ public class PerfilService : IPerfilService
 
     public async Task<bool> Inativar(Perfil entity)
     {
+        if (entity == null) throw new Exception(EMensagem.IS_NULL);
+
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Inativar(entity);

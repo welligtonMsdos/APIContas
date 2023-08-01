@@ -27,6 +27,8 @@ public class ContaService : IContaService
 
     public async Task<bool> Ativar(Conta entity)
     {
+        if (entity == null) throw new Exception(EMensagem.IS_NULL);
+
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Ativar(entity);
@@ -56,6 +58,8 @@ public class ContaService : IContaService
 
     public async Task<bool> Excluir(Conta entity)
     {
+        if (entity == null) throw new Exception(EMensagem.IS_NULL);
+
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Excluir(entity);
@@ -63,6 +67,8 @@ public class ContaService : IContaService
 
     public async Task<bool> Inativar(Conta entity)
     {
+        if (entity == null) throw new Exception(EMensagem.IS_NULL);
+
         if (entity.Id == 0) throw new Exception(EMensagem.ID_ZERADO);
 
         return await _repository.Inativar(entity);

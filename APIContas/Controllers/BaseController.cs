@@ -14,6 +14,7 @@ public abstract class BaseController : ControllerBase
                   result.ToString().Contains("cannot") ||
                   result.ToString().Contains("severed") ||
                   result.ToString().Contains("inativado") ||
+                  result.ToString().Contains("null") ||
                   result.ToString().Contains("Id não"))
         {
             return Ok(new

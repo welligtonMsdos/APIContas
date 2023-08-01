@@ -8,6 +8,7 @@ namespace APIContas.Data.EF;
 public class UsuarioEF : IUsuarioRepository
 {
     private readonly ContasContext _context;
+
     public UsuarioEF(ContasContext context) => (_context) = (context);
 
     public async Task<bool> Alterar(Usuario entity)
@@ -35,6 +36,7 @@ public class UsuarioEF : IUsuarioRepository
     public async Task<Usuario> BuscarPorId(int id)
     {
         return await _context.Usuario
+            .Include(x => x.Perfil)
             .IgnoreQueryFilters()
             .FirstAsync(x => x.Id == id);
     }
@@ -51,6 +53,7 @@ public class UsuarioEF : IUsuarioRepository
     public async Task<ICollection<Usuario>> BuscarTodos()
     {
         return await _context.Usuario
+           .Include(x => x.Perfil)
            .OrderBy(x => x.Nome)
            .ToListAsync();
     }
@@ -75,6 +78,8 @@ public class UsuarioEF : IUsuarioRepository
 
     public async Task<bool> Incluir(Usuario entity)
     {
+        entity.Ativo = true;
+
         _context.Add(entity);
 
         await _context.SaveChangesAsync();
