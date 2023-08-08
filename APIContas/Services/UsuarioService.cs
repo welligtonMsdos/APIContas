@@ -1,9 +1,11 @@
-﻿using APIContas.Data.Interfaces;
+﻿using APIContas.Data.Core;
+using APIContas.Data.Interfaces;
 using APIContas.Data.ValidatorFluent;
 using APIContas.Enum;
 using APIContas.Model;
-using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 
 namespace APIContas.Services;
 
@@ -23,6 +25,10 @@ public class UsuarioService : IUsuarioService
 
         if (!validResult.IsValid) throw new Exception("error" + erros[0]);
 
+        var hash = new Hash(SHA512.Create());
+
+        entity.Senha = hash.Criptografar(entity.Senha);
+
         return await _repository.Alterar(entity);
     }
 
@@ -41,6 +47,37 @@ public class UsuarioService : IUsuarioService
 
         return await _repository.BuscarPorId(id);
     }
+
+    public Usuario BuscarPorIEnumerable(IEnumerable<Usuario> usuarios)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Usuario BuscarPorNomeSenha(string nome, string senha)
+    {
+        if (string.IsNullOrEmpty(nome)) throw new Exception(EMensagem.IS_NULL);
+
+        if (string.IsNullOrEmpty(senha)) throw new Exception(EMensagem.IS_NULL);
+
+        var hash = new Hash(SHA512.Create());
+
+        senha = hash.Criptografar(senha);
+
+        return _repository.BuscarPorNomeSenha(nome, senha);
+    }
+
+    //public async Task<ICollection<Usuario>> BuscarPorNomeSenha(string nome, string senha)
+    //{
+    //    if (string.IsNullOrEmpty(nome)) throw new Exception(EMensagem.IS_NULL);
+
+    //    if (string.IsNullOrEmpty(senha)) throw new Exception(EMensagem.IS_NULL);
+
+    //    var hash = new Hash(SHA512.Create());
+
+    //    senha = hash.Criptografar(senha);
+
+    //    return await _repository.BuscarPorNomeSenha(nome, senha);
+    //}
 
     public async Task<ICollection<Usuario>> BuscarPorValores(string values)
     {
@@ -69,7 +106,7 @@ public class UsuarioService : IUsuarioService
 
         return await _repository.Inativar(entity);
     }
-
+ 
     public async Task<bool> Incluir(Usuario entity)
     {
         ValidationResult validResult = new UsuarioValidator().Validate(entity);
@@ -77,6 +114,10 @@ public class UsuarioService : IUsuarioService
         string[] erros = validResult.ToString("~").Split('~');
 
         if (!validResult.IsValid) throw new Exception("error" + erros[0]);
+
+        var hash = new Hash(SHA512.Create());
+
+        entity.Senha = hash.Criptografar(entity.Senha);
 
         return await _repository.Incluir(entity);
     }

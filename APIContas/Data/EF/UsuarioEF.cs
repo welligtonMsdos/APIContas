@@ -41,6 +41,17 @@ public class UsuarioEF : IUsuarioRepository
             .FirstAsync(x => x.Id == id);
     }
 
+    public Usuario BuscarPorNomeSenha(string nome, string senha)
+    {
+       return _context.Usuario
+             .Include(x => x.Perfil)
+             .Where(x => x.Nome == nome && x.Senha == senha)
+             .Select(u => new Usuario {                 
+                 Nome = u.Nome,                 
+                 PerfilId = u.PerfilId                
+             }).First();
+    }    
+
     public async Task<ICollection<Usuario>> BuscarPorValores(string values)
     {
         if (values == null) return await BuscarTodos();

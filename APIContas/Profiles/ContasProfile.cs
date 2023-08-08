@@ -30,6 +30,7 @@ public class ContasProfile : Profile
 
         CreateMap<CreateUsuarioDto, Usuario>().ReverseMap();        
         CreateMap<UpdateUsuarioDto, Usuario>().ReverseMap();
+        CreateMap<LoginDto, Usuario>().ReverseMap();
 
         CreateMap<Usuario, ReadUsuarioDto>()
             .ForMember(x => x.PerfilDescricao, x => x.MapFrom(x => x.Perfil.Descricao));

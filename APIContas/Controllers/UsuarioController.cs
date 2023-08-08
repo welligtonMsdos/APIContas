@@ -2,7 +2,9 @@
 using APIContas.Data.Interfaces;
 using APIContas.Enum;
 using APIContas.Model;
+using APIContas.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIContas.Controllers;
@@ -22,6 +24,7 @@ public class UsuarioController : BaseController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> BuscarTodos()
     {
         try
@@ -40,6 +43,7 @@ public class UsuarioController : BaseController
     /// <param name="id">id do perfil</param>
     /// <returns></returns>
     [HttpGet("{id}")]
+    [Authorize(Roles = "1")]
     public async Task<IActionResult> BuscarPorId(int id)
     {
         try
@@ -75,6 +79,29 @@ public class UsuarioController : BaseController
         {
             return Response(ex.Message);
         }
+    }
+
+    [HttpPost]
+    [Route("login")]
+    public async Task<ActionResult<dynamic>> Authenticate([FromBody] LoginDto login)
+    {
+        try
+        {
+            var user = _service.BuscarPorNomeSenha(login.Nome, login.Senha);
+
+            var token = TokenService.GenerateToken(user);
+
+            return new
+            {
+                nome =  user.Nome,
+                perfilId = user.PerfilId,               
+                token = token
+            };
+        }
+        catch (Exception ex)
+        {
+            return Response(ex.Message);
+        }       
     }
 
     /// <summary>
