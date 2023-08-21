@@ -20,20 +20,22 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Conta Api",
-        Version = "v1"
-    });
+builder.Services.AddInfraSwagger();
 
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new OpenApiInfo
+//    {
+//        Title = "Conta Api",
+//        Version = "v1"
+//    });
 
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+//    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 
-    c.IncludeXmlComments(xmlPath);
-});
+//    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+//    c.IncludeXmlComments(xmlPath);
+//});
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

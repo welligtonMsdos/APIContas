@@ -23,8 +23,7 @@ public class UsuarioController : BaseController
     /// Retorna todos os usuários ativos 
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
-    [Authorize]
+    [HttpGet]   
     public async Task<IActionResult> BuscarTodos()
     {
         try
@@ -42,8 +41,7 @@ public class UsuarioController : BaseController
     /// </summary>
     /// <param name="id">id do perfil</param>
     /// <returns></returns>
-    [HttpGet("{id}")]
-    [Authorize(Roles = "1")]
+    [HttpGet("{id}")]   
     public async Task<IActionResult> BuscarPorId(int id)
     {
         try
